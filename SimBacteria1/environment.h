@@ -14,25 +14,14 @@ namespace Life
 		Environment(void);
 
 		void Cycle(void);
-		void Report(void);
+		void ReportLong(void) const;
+		void ReportShort(void) const;
 
 	protected:
 
 		unsigned long long clock = 0;
 		std::list<Bacterium> bacteria;
 	};
-
-	//enum class BacteriumStatus
-	//{
-	//	IDLE = 0x0,
-	//	FISSION = 0x2,
-	//	MOVING = 0x4
-	//};
-
-	//enum class BacteriumfissionStep
-	//{
-
-	//};
 
 	enum class FissionPhase
 	{
@@ -45,22 +34,24 @@ namespace Life
 	class Bacterium
 	{
 	public:
-		Bacterium(void) = default;
-		explicit Bacterium(unsigned long long marker);
+		Bacterium(void) = delete;
+		explicit Bacterium(unsigned long long markerSrc);
 		void Action(std::list<Bacterium> &newBorns);
 		void Report(void) const;
 	
+		const long long &age = this->age_;						// Read-only access.
 		const unsigned long long &marker = this->marker_;		// Read-only access.
 		const FissionPhase &fissionPhase = this->fissionPhase_;	// Read-only access.
 		
 	protected:
-		unsigned long long MakeNewMarker(void);
 		void Reproduce(std::list<Bacterium> &newBorns);
 
+		long long age_ = 0;
 		FissionPhase fissionPhase_ = FissionPhase::A;
-		unsigned long long marker_ = 0;
+		const unsigned long long marker_;
 		bool isHealthy = true;
-		//BacteriumStatus status = BacteriumStatus::IDLE;
 	};
+
+	unsigned long long MakeNewMarker(unsigned long long seed);
 }
 #endif
