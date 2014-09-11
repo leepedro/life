@@ -6,7 +6,7 @@ namespace Life
 {
 	Environment::Environment(void)
 	{
-		this->bacteria.emplace_back(Bacterium(0));
+		this->bacteria.emplace_back(0);
 	}
 
 	void Environment::Cycle(void)
